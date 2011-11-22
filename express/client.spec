@@ -2,7 +2,7 @@
 
 Summary:       Multi-tenant cloud management system client tools
 Name:          rhc
-Version:       0.82.10
+Version:       0.82.11
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       MIT
@@ -12,10 +12,13 @@ Source0:       rhc-%{version}.tar.gz
 BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires: rubygem-rake
 BuildRequires: rubygem-rspec
-Requires:      ruby >= 1.8.5
+Requires:      ruby >= 1.8.6
 Requires:      rubygem-parseconfig
 
 %if 0%{?fedora} == 13
+%define jpure 1
+%endif
+%if 0%{?rhel} == 5
 %define jpure 1
 %endif
 %ifos darwin
@@ -97,18 +100,23 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/openshift/express.conf
 
 %changelog
-* Mon Nov 21 2011 Alex Boone <aboone@redhat.com> 0.82.10-1
-- allow ruby >= 1.8.5, don't use json_pure for RHEL5 (aboone@redhat.com)
-
-* Mon Nov 21 2011 Alex Boone <aboone@redhat.com> 0.82.9-1
-- Merge remote-tracking branch 'origin/master' into rhel5 (aboone@redhat.com)
-- Use rubygem-json for RHEL5 (aboone@redhat.com)
+* Mon Nov 21 2011 Dan McPherson <dmcphers@redhat.com> 0.82.11-1
+- reducing the number of messages being output for the rhc-create-app command
+  (abhgupta@redhat.com)
 - Moved messages to __END__. Added ssh-agent test. Moved message rendering to
   its own function (fotios@redhat.com)
-- Automatic commit of package [rhc] release [0.82.7-1]. (aboone@redhat.com)
-- Degrade to Rake::GemPackageTask when Gem::PackageTask is not supported
-  (aboone@redhat.com)
-- Lower requirement on ruby version to 1.8.5 (aboone@redhat.com)
+
+* Mon Nov 21 2011 Dan McPherson <dmcphers@redhat.com>
+- reducing the number of messages being output for the rhc-create-app command
+  (abhgupta@redhat.com)
+- Moved messages to __END__. Added ssh-agent test. Moved message rendering to
+  its own function (fotios@redhat.com)
+
+* Mon Nov 21 2011 Dan McPherson <dmcphers@redhat.com>
+- reducing the number of messages being output for the rhc-create-app command
+  (abhgupta@redhat.com)
+- Moved messages to __END__. Added ssh-agent test. Moved message rendering to
+  its own function (fotios@redhat.com)
 
 * Sat Nov 19 2011 Dan McPherson <dmcphers@redhat.com> 0.82.8-1
 - Refactored rhc-chk to use Test::Unit for tests (fotios@redhat.com)
